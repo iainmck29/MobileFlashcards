@@ -13,7 +13,7 @@ export default class Home extends React.Component {
                     <Text style={styles.headText}>Decks:</Text>
                 </View>
                 <View style={styles.deckList}>
-                    <DeckPreview />
+                    <DeckPreview navigation={this.props.navigation} />
 
                     {/* {Object.keys.map((data) => (
                         <View>

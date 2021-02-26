@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'react-native-unimodules';
 import Home from './components/Home'
@@ -61,18 +61,31 @@ const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator()
 
-function StackNav() {
+function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='DeckMain' component={DeckMain} />
+
     </Stack.Navigator>
   )
 }
 
+// function DeckStack() {
+//   return (
+//     <Deck.Navigator>
+//       <Deck.Screen name='DeckMain' component={DeckMain} />
+//       <Deck.Screen name='Answer' component={AnswerView} />
+//       <Deck.Screen name='Add' component={AddQuestionView} />
+//     </Deck.Navigator>
+//   )
+// }
+
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <React.Fragment>
       <MobileStatusBar />
       <NavigationContainer>
         <Tab.Navigator initialRouteName="Home"
@@ -86,7 +99,7 @@ export default function App() {
                   ? 'home-sharp'
                   : 'home-outline'
               }
-              else if (route.name === 'AddDeckView') {
+              else if (route.name === 'Add Deck') {
                 iconName = focused
                   ? 'add-circle-sharp'
                   : 'add-circle-outline'
@@ -101,8 +114,8 @@ export default function App() {
               backgroundColor: blue,
             }
           }}>
-          <Tab.Screen name='Home' component={Home} />
-          <Tab.Screen name='AddDeckView' component={AddDeckView} />
+          <Tab.Screen name='Home' component={HomeStack} />
+          <Tab.Screen name='Add Deck' component={AddDeckView} />
         </Tab.Navigator>
         {/* <Home /> */}
         {/* <DeckMain /> */}
@@ -110,7 +123,7 @@ export default function App() {
         {/* <ScoreView /> */}
         {/* <AddDeckView /> */}
       </NavigationContainer>
-    </View>
+    </React.Fragment>
   );
 }
 

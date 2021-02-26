@@ -1,17 +1,25 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Button from './Button'
-import { gray, black } from '../utils/colors'
+import { gray, black, white } from '../utils/colors'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function DeckView() {
+export default class DeckPreview extends React.Component {
     // const questionLength = questions.length
-    return (
-        <View style={styles.container}>
-            <Text style={styles.heading}>Title</Text>
-            <Text style={styles.subheading}>Questions in deck: 8</Text>
-            <Button>View Deck</Button>
-        </View>
-    )
+
+    viewDeck = (id) => {
+        this.props.navigation.navigate('DeckMain')
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.heading}>Title</Text>
+                <Text style={styles.subheading}>Questions in deck: 8</Text>
+                <Button onPress={this.viewDeck}>View Deck</Button>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -29,10 +37,12 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 24,
         textAlign: 'center',
-        marginTop: 10
+        marginTop: 10,
+        color: white
     },
     subheading: {
         fontSize: 18,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: white
     }
 })
