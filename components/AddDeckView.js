@@ -5,6 +5,7 @@ import { addDeckToStorage } from '../utils/api'
 import { black, gray } from '../utils/colors'
 import { formatDeck } from '../utils/helpers'
 import Button from './Button'
+import { addDeck } from '../actions/index'
 
 class AddDeckView extends React.Component {
     state = {
@@ -23,6 +24,7 @@ class AddDeckView extends React.Component {
 
         //Format deck
         const formattedDeck = formatDeck(deck)
+        console.log(formattedDeck)
 
         //Update redux
         this.props.dispatch(addDeck(formattedDeck))

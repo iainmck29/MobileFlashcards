@@ -25,7 +25,7 @@ export default function dummyData() {
     }
 }
 
-export function formatDeck({ deck }) {
+export function formatDeck(deck) {
     return {
 
         [deck]: {
@@ -34,3 +34,5 @@ export function formatDeck({ deck }) {
         },
     }
 }
+
+export const DECK_STORAGE_KEY = 'MobileFlashcards:decks'
