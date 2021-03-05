@@ -3,21 +3,23 @@ import { View, Text, StyleSheet } from 'react-native'
 import Button from './Button'
 import dummyData from '../utils/helpers'
 import DeckPreview from './DeckPreview'
-import { receiveDecks } from '../actions'
+import { receiveDecks } from '../actions/index'
 import { handleInitialData } from '../utils/api'
 import { connect } from 'react-redux'
 
 
 
-export default class Home extends React.Component {
+class Home extends React.Component {
     state = {
         ready: false
     }
 
     componentDidMount() {
+        const { dispatch } = this.props
         handleInitialData()
-            .then((results) => {
-                if (results) {
+            .then((decks) => dispatch(receiveDecks(decks)))
+            .then(({ decks }) => {
+                if (decks) {
                     this.setState(() => ({
                         ready: true
                     }))
@@ -85,4 +87,4 @@ function mapStateToProps({ decks }) {
     }
 }
 
-connect(mapStateToProps)(Home)
+export default connect(mapStateToProps)(Home)

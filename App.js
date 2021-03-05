@@ -17,6 +17,8 @@ import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux'
 import reducer from './reducers'
 import { handleInitialData } from './utils/api'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DECK_STORAGE_KEY } from './utils/helpers';
 
 
 function MobileStatusBar() {
@@ -57,7 +59,14 @@ function HomeStack() {
 
 
 
-export default class App extends React.Component {
+class App extends React.Component {
+  componentDidMount() {
+    return AsyncStorage.setItem(DECK_STORAGE_KEY, '')
+      .catch((e) => {
+        alert('failed to set data')
+      })
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)} >
@@ -108,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-connect()(App)
+export default connect()(App)
