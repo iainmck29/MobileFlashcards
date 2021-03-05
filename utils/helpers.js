@@ -1,4 +1,4 @@
-export default function DummyData() {
+export default function dummyData() {
     return {
         React: {
             title: 'React',
@@ -22,5 +22,15 @@ export default function DummyData() {
                 }
             ]
         }
+    }
+}
+
+export function formatDeck({ deck }) {
+    return {
+
+        [deck]: {
+            title: deck,
+            questions: []
+        },
     }
 }

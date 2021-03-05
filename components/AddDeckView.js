@@ -1,15 +1,56 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { connect } from 'react-redux'
+import { addDeckToStorage } from '../utils/api'
 import { black, gray } from '../utils/colors'
+import { formatDeck } from '../utils/helpers'
 import Button from './Button'
 
-export default class AddDeckView extends React.Component {
+class AddDeckView extends React.Component {
+    state = {
+        value: ''
+    }
+
+    onChange(text) {
+        this.setState(() => ({
+            value: text
+        }))
+    }
+
+    submit = () => {
+        //handle submission
+        const deck = this.state.value
+
+        //Format deck
+        const formattedDeck = formatDeck(deck)
+
+        //Update redux
+        this.props.dispatch(addDeck(formattedDeck))
+
+        //Reset the state
+        this.setState(() => ({
+            value: ''
+        }))
+
+        //Save to database
+        // addDeckToStorage({ deck, formattedDeck })
+
+        //Navigate to home
+        this.props.navigation.navigate('Home')
+
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>Add New Deck:</Text>
-                <TextInput placeholder='Input your deck name' placeholderTextColor={gray} style={styles.input} />
-                <Button>Submit</Button>
+                <TextInput placeholder='Input your deck name'
+                    value={this.state.value}
+                    onChangeText={text => this.onChange(text)}
+                    placeholderTextColor={gray}
+                    style={styles.input} />
+                <Button onPress={this.submit}>Submit</Button>
             </View>
         )
     }
@@ -37,3 +78,5 @@ const styles = StyleSheet.create({
         padding: 10
     }
 })
+
+export default connect()(AddDeckView)

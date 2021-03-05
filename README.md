@@ -128,7 +128,35 @@ Data structure example:
 
 
 Build stage Notes:
+    Navigation complete using stack navigator and tab navigator.
+    Header removed in stack navigator for the answer and score views to prevent user going back to previously answered questions
 
+    Next jobs:
+    Begin to add in some functionality. Create a redux store which will handle much of the data. This can be done in stages going backwards or forwards
+        UI -> handlers -> actions -> reducers -> api(async storage?)
+    
+    For sake of consistency I will add this in for each individual part in the above order.
 
+    Order of tasks:
+     - Ability to add decks to storage
+     - Render decks to home page
+     - Correct information displayed for decks on DeckPreview and in DeckMain
+     ...
 
+    To do first:
+    Set up redux and middleware for async function (redux thunk)
+    Import any necessary packages
+
+    Add decks to storage:
+    - When user types in the deck name this will change value of local state
+    - User will press submit button which will then trigger the handler (handleSubmit)
+    - Action will be dispatched to store
+
+    ** NEED TO SETITEM FOR ASYNC STORAGE, OTHER STUFF DONE **
+
+    Render decks on homepage:
+    - Receive decks part of state from store and pass as props to Home component
+    - Iterate over decks part of store passed in from props (object.keys(decks))
+        - Will receive the ID of each deck which can be passed to DeckPreview
+    - Render DeckPreview for each deck passing in the deck as a prop
 

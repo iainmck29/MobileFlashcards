@@ -1,26 +1,55 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Button from './Button'
-import DummyData from '../utils/helpers'
+import dummyData from '../utils/helpers'
 import DeckPreview from './DeckPreview'
+import { receiveDecks } from '../actions'
+import { handleInitialData } from '../utils/api'
+
 
 
 export default class Home extends React.Component {
+    state = {
+        ready: false
+    }
+
+    componentDidMount() {
+        handleInitialData()
+            .then((results) => {
+                console.log(results)
+                if (results) {
+                    this.setState(() => ({
+                        ready: true
+                    }))
+                }
+            })
+    }
+
     render() {
+        const { decks } = this.props
+        console.log(decks)
         return (
             <View style={styles.container}>
                 <View style={styles.headerView}>
                     <Text style={styles.headText}>Decks:</Text>
                 </View>
-                <View style={styles.deckList}>
-                    <DeckPreview navigation={this.props.navigation} />
+                {this.state.ready === false
+                    ? <Text>You have not yet added any decks</Text>
+                    :
+                    <View style={styles.deckList}>
+                        <DeckPreview navigation={this.props.navigation} />
 
-                    {/* {Object.keys.map((data) => (
-                        <View>
+                        {/* {Object.keys(decks).length() !== 0
+                        ? Object.keys(decks).map((deck) => (
+                            <View key={deck.title}>
+                                <DeckPreview navigation={this.props.navigation} deck={deck} />
 
-                        </View>
-                    ))} */}
-                </View>
+                            </View>
+                        ))
+                        : null} */}
+                    </View>
+
+                }
             </View>
         )
     }
@@ -49,3 +78,9 @@ const styles = StyleSheet.create({
     },
 
 });
+
+function mapStateToProps({ decks }) {
+    return {
+        decks,
+    }
+}

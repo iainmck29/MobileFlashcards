@@ -12,10 +12,12 @@ export default class DeckPreview extends React.Component {
     }
 
     render() {
+        const { deck } = this.props
+        // const deckName = Object.keys(deck)
         return (
             <View style={styles.container}>
                 <Text style={styles.heading}>Title</Text>
-                <Text style={styles.subheading}>Questions in deck: 8</Text>
+                <Text style={styles.subheading}>Questions in deck: num</Text>
                 <Button onPress={this.viewDeck}>View Deck</Button>
             </View>
         )

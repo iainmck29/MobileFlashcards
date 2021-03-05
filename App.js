@@ -13,6 +13,10 @@ import AddDeckView from './components/AddDeckView'
 import AddQuestionView from './components/AddQuestionView';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
+import { createStore } from 'redux';
+import { connect, Provider } from 'react-redux'
+import reducer from './reducers'
+import { handleInitialData } from './utils/api'
 
 
 function MobileStatusBar() {
@@ -25,39 +29,7 @@ function MobileStatusBar() {
 
 const Tab = createBottomTabNavigator();
 
-// function TabNav() {
-//   return (
-//     <Tab.Navigator initialRouteName="Home"
-//       screenOptions={({ route }) => ({
-//         tabBarIcon: ({ focused }) => {
-//           let iconName;
-//           let iconColor
 
-//           if (route.name === 'Home') {
-//             iconName = focused
-//               ? 'home-sharp'
-//               : 'home-outline'
-//           }
-//           else if (route.name === 'AddDeckView') {
-//             iconName = focused
-//               ? 'add-circle-sharp'
-//               : 'add-circle-outline'
-//           }
-
-//           return <Ionicons name={iconName} size={24} color={white} />
-//         }
-//       })}
-//       tabBarOptions={{
-//         activeTintColor: white,
-//         style: {
-//           backgroundColor: blue,
-//         }
-//       }}>
-//       <Tab.Screen name='Home' component={Home} />
-//       <Tab.Screen name='AddDeckView' component={AddDeckView} />
-//     </Tab.Navigator>
-//   )
-// }
 
 const Stack = createStackNavigator()
 
@@ -66,7 +38,9 @@ function HomeStack() {
     <Stack.Navigator>
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='DeckMain' component={DeckMain} />
-
+      <Stack.Screen name='AnswerView' options={{ headerShown: false }} component={AnswerView} />
+      <Stack.Screen name='AddQuestionView' component={AddQuestionView} />
+      <Stack.Screen name='ScoreView' options={{ headerShown: false }} component={ScoreView} />
     </Stack.Navigator>
   )
 }
@@ -83,50 +57,48 @@ function HomeStack() {
 
 
 
-export default function App() {
-  return (
-    <React.Fragment>
-      <MobileStatusBar />
-      <NavigationContainer>
-        <Tab.Navigator initialRouteName="Home"
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused }) => {
-              let iconName;
-              let iconColor
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={createStore(reducer)} >
+        <React.Fragment>
+          <MobileStatusBar />
+          <NavigationContainer>
+            <Tab.Navigator initialRouteName="Home"
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused }) => {
+                  let iconName;
+                  let iconColor
 
-              if (route.name === 'Home') {
-                iconName = focused
-                  ? 'home-sharp'
-                  : 'home-outline'
-              }
-              else if (route.name === 'Add Deck') {
-                iconName = focused
-                  ? 'add-circle-sharp'
-                  : 'add-circle-outline'
-              }
+                  if (route.name === 'Home') {
+                    iconName = focused
+                      ? 'home-sharp'
+                      : 'home-outline'
+                  }
+                  else if (route.name === 'Add Deck') {
+                    iconName = focused
+                      ? 'add-circle-sharp'
+                      : 'add-circle-outline'
+                  }
 
-              return <Ionicons name={iconName} size={24} color={white} />
-            }
-          })}
-          tabBarOptions={{
-            activeTintColor: white,
-            style: {
-              backgroundColor: blue,
-            }
-          }}>
-          <Tab.Screen name='Home' component={HomeStack} />
-          <Tab.Screen name='Add Deck' component={AddDeckView} />
-        </Tab.Navigator>
-        {/* <Home /> */}
-        {/* <DeckMain /> */}
-        {/* <AnswerView /> */}
-        {/* <ScoreView /> */}
-        {/* <AddDeckView /> */}
-      </NavigationContainer>
-    </React.Fragment>
-  );
+                  return <Ionicons name={iconName} size={24} color={white} />
+                }
+              })}
+              tabBarOptions={{
+                activeTintColor: white,
+                style: {
+                  backgroundColor: blue,
+                }
+              }}>
+              <Tab.Screen name='Home' component={HomeStack} />
+              <Tab.Screen name='Add Deck' component={AddDeckView} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </React.Fragment>
+      </Provider>
+    )
+  }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -135,3 +107,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+connect()(App)

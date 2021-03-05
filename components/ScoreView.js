@@ -4,6 +4,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Button from './Button'
 
 export default class ScoreView extends React.Component {
+
+    restart = () => {
+        this.props.navigation.navigate
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -11,7 +16,7 @@ export default class ScoreView extends React.Component {
                     <Text style={styles.questionText}>You scored:</Text>
                     <Text style={styles.questionText}>4/5</Text>
                 </View>
-                <Button>Restart</Button>
+                <Button onPress={this.restart}>Restart</Button>
                 <Button>Go to Deck</Button>
 
             </View>
