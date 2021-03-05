@@ -3,11 +3,15 @@ export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 
 
 export function addDeck(deck) {
-    type: ADD_DECK,
+    return {
+        type: ADD_DECK,
         deck
+    }
 }
 
 export function receiveDecks(decks) {
-    type: RECEIVE_DECKS,
+    return {
+        type: RECEIVE_DECKS,
         decks
+    }
 }

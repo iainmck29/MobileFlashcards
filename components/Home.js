@@ -5,6 +5,7 @@ import dummyData from '../utils/helpers'
 import DeckPreview from './DeckPreview'
 import { receiveDecks } from '../actions'
 import { handleInitialData } from '../utils/api'
+import { connect } from 'react-redux'
 
 
 
@@ -16,7 +17,6 @@ export default class Home extends React.Component {
     componentDidMount() {
         handleInitialData()
             .then((results) => {
-                console.log(results)
                 if (results) {
                     this.setState(() => ({
                         ready: true
@@ -84,3 +84,5 @@ function mapStateToProps({ decks }) {
         decks,
     }
 }
+
+connect(mapStateToProps)(Home)

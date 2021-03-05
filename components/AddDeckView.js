@@ -16,6 +16,7 @@ class AddDeckView extends React.Component {
         this.setState(() => ({
             value: text
         }))
+
     }
 
     submit = () => {
@@ -30,8 +31,6 @@ class AddDeckView extends React.Component {
             },
         }
 
-        console.log(formattedDeck)
-
         //Update redux
         this.props.dispatch(addDeck(formattedDeck))
 
@@ -41,7 +40,7 @@ class AddDeckView extends React.Component {
         }))
 
         //Save to database
-        // addDeckToStorage({ deck, formattedDeck })
+        addDeckToStorage(formattedDeck)
 
         //Navigate to home
         this.props.navigation.navigate('Home')
