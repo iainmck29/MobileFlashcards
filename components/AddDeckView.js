@@ -23,7 +23,13 @@ class AddDeckView extends React.Component {
         const deck = this.state.value
 
         //Format deck
-        const formattedDeck = formatDeck(deck)
+        const formattedDeck = {
+            [deck]: {
+                questions: [],
+                title: deck,
+            },
+        }
+
         console.log(formattedDeck)
 
         //Update redux
