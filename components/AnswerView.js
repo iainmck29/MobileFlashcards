@@ -80,6 +80,9 @@ class AnswerView extends React.Component {
                 <TouchableOpacity onPress={this.toStart} style={{ marginTop: 50 }}>
                     <Text style={{ color: blue }}>Go back to start..</Text>
                 </TouchableOpacity>
+                <View>
+                    <Text>Questions remaining: {questionCount.length - count}</Text>
+                </View>
             </View>
         )
     }
