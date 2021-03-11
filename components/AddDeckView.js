@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 import { addDeckToStorage } from '../utils/api'
 import { black, gray } from '../utils/colors'
@@ -50,7 +50,7 @@ class AddDeckView extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behaviour='padding' style={styles.container}>
                 <Text style={styles.header}>Add New Deck:</Text>
                 <TextInput placeholder='Input your deck name'
                     value={this.state.value}
@@ -58,7 +58,7 @@ class AddDeckView extends React.Component {
                     placeholderTextColor={gray}
                     style={styles.input} />
                 <Button onPress={this.submit}>Submit</Button>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

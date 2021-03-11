@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import Button from './Button'
-import dummyData from '../utils/helpers'
 import DeckPreview from './DeckPreview'
 import { receiveDecks } from '../actions/index'
 import { handleInitialData } from '../utils/api'
@@ -28,31 +27,33 @@ class Home extends React.Component {
     }
 
     render() {
-        const { decks } = this.props
-        console.log(decks)
+        const { state } = this.props
+
         return (
             <View style={styles.container}>
                 <View style={styles.headerView}>
                     <Text style={styles.headText}>Decks:</Text>
                 </View>
+
+
                 {this.state.ready === false
                     ? <Text>You have not yet added any decks</Text>
                     :
-                    <View style={styles.deckList}>
-                        <DeckPreview navigation={this.props.navigation} />
+                    <ScrollView style={styles.scroll} contentContainerStyle={styles.contentContainer}>
 
-                        {/* {Object.keys(decks).length() !== 0
-                        ? Object.keys(decks).map((deck) => (
-                            <View key={deck.title}>
-                                <DeckPreview navigation={this.props.navigation} deck={deck} />
 
-                            </View>
-                        ))
-                        : null} */}
-                    </View>
+                        {Object.keys(state).length !== 0
+                            ? Object.keys(state).map((deck, index) => (
+                                <DeckPreview navigation={this.props.navigation} deck={deck} key={index} />
+
+                            ))
+                            : null}
+                    </ScrollView>
 
                 }
-            </View>
+
+
+            </View >
         )
     }
 }
@@ -62,7 +63,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        justifyContent: 'space-between'
     },
     headerView: {
         marginTop: 60,
@@ -75,15 +75,23 @@ const styles = StyleSheet.create({
     },
     deckList: {
         flex: 1,
-        justifyContent: 'space-between',
+        justifyContent: "flex-start",
         alignItems: 'center'
     },
+    scroll: {
+        flex: 1,
+    },
+    contentContainer: {
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingVertical: 20
+    }
 
 });
 
-function mapStateToProps({ decks }) {
+function mapStateToProps(state) {
     return {
-        decks
+        state
     }
 }
 

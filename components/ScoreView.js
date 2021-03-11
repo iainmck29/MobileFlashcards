@@ -1,23 +1,31 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { connect } from 'react-redux'
 import Button from './Button'
 
-export default class ScoreView extends React.Component {
+class ScoreView extends React.Component {
 
     restart = () => {
-        this.props.navigation.navigate
+        this.props.navigation.navigate('AnswerView')
+    }
+
+    toDeck = () => {
+        const { deck } = this.props.route.params
+        this.props.navigation.navigate('DeckMain', { deck })
     }
 
     render() {
+        const { score, numQuestions } = this.props
+
         return (
             <View style={styles.container}>
                 <View style={styles.textBox}>
                     <Text style={styles.questionText}>You scored:</Text>
-                    <Text style={styles.questionText}>4/5</Text>
+                    <Text style={styles.questionText}>{score}/{numQuestions}</Text>
                 </View>
                 <Button onPress={this.restart}>Restart</Button>
-                <Button>Go to Deck</Button>
+                <Button onPress={this.toDeck}>Go to Deck</Button>
 
             </View>
         )
@@ -44,3 +52,16 @@ const styles = StyleSheet.create({
 
 
 })
+
+function mapStateToProps(state, { route }) {
+    const { deck, score } = route.params
+    const numQuestions = state[deck]["questions"].length
+
+    return {
+        deck,
+        score,
+        numQuestions
+    }
+}
+
+export default connect(mapStateToProps)(ScoreView)

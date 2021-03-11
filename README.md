@@ -152,7 +152,6 @@ Build stage Notes:
     - User will press submit button which will then trigger the handler (handleSubmit)
     - Action will be dispatched to store
 
-    ** NEED TO SETITEM FOR ASYNC STORAGE, OTHER STUFF DONE **
 
     Render decks on homepage:
     - Receive decks part of state from store and pass as props to Home component
@@ -160,3 +159,40 @@ Build stage Notes:
         - Will receive the ID of each deck which can be passed to DeckPreview
     - Render DeckPreview for each deck passing in the deck as a prop
 
+    Iterate through questions in AnswerView
+    - Have internal component in answer view which is displayed on iteration.
+    - Use variable count to determine which question should be rendered
+    - When user starts quiz, the count should be at 0. questions[0] is rendered.
+    - When user click correct/incorrect, count should be incremented by 1. If no question exists at that index then render the ScoreView.
+        - Amount of correct/incorrect answers should be maintained somewhere in state to be passed to ScoreView at finish.
+
+
+    Add questions to deck:
+    - User inputs their text to the text box fields, local state is changed for questionTextBox and answerTextBox respectively.
+    - User submits their q & a via submit button and handler is called.
+        - Handler checks that neither text box is empty, if it is then it alerts the user as such.
+        - Handler calls dispatch with the question and answer data as props
+        - Handler then updates Async storage with new data
+        - Reducer calls action type ADD_QUESTION and adds the data to the existing state
+    - User is alerted that the question has been successfully added to the deck. If failed then they are alerted as such.
+
+    - Return to async storage at later point when help has came
+
+    Delete deck:
+        - User presses delete deck button
+        - Deck is removed from redux store
+            - Handler calls dispatch on delete deck action passing it the deck id (DELETE_DECK)
+            - Reducer removes deck from store
+        - Deck is removed from AsyncStorage
+        - User is alerted deck has been succesfully removed
+        - User is redirected to Home
+
+    Show answer:
+        - User clicks showAnswer TO.
+        - Function is called from this.props.answer to set state in parent component to true
+        - Question rerenders with answer showing
+            - If it is true then an animation shows the answer, answer bounces onto screen.
+            - Uses animations similar to those shown in course
+        
+    Notifications:
+        - Set using the same method as that in course.

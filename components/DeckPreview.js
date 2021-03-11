@@ -3,21 +3,23 @@ import { View, Text, StyleSheet } from 'react-native'
 import Button from './Button'
 import { gray, black, white } from '../utils/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { connect } from 'react-redux'
 
-export default class DeckPreview extends React.Component {
+class DeckPreview extends React.Component {
     // const questionLength = questions.length
 
-    viewDeck = (id) => {
-        this.props.navigation.navigate('DeckMain')
+    viewDeck = () => {
+        const { deck } = this.props
+        this.props.navigation.navigate('DeckMain', { deck: deck })
     }
 
     render() {
-        const { deck } = this.props
+        const { deck, state } = this.props
         // const deckName = Object.keys(deck)
         return (
             <View style={styles.container}>
-                <Text style={styles.heading}>Title</Text>
-                <Text style={styles.subheading}>Questions in deck: num</Text>
+                <Text style={styles.heading}>{state[deck].title}</Text>
+                <Text style={styles.subheading}>Questions in deck: {state[deck].questions.length}</Text>
                 <Button onPress={this.viewDeck}>View Deck</Button>
             </View>
         )
@@ -30,11 +32,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: gray,
-        maxHeight: 150,
+        height: 150,
         width: 300,
         borderRadius: 4,
         borderWidth: 1,
-        borderColor: black
+        borderColor: black,
+        marginBottom: 20,
     },
     heading: {
         fontSize: 24,
@@ -48,3 +51,12 @@ const styles = StyleSheet.create({
         color: white
     }
 })
+
+function mapStateToProps(state, props) {
+    return {
+        state,
+        props
+    }
+}
+
+export default connect(mapStateToProps)(DeckPreview)

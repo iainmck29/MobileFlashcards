@@ -16,9 +16,8 @@ import { Ionicons } from '@expo/vector-icons'
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux'
 import reducer from './reducers'
-import { handleInitialData } from './utils/api'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DECK_STORAGE_KEY } from './utils/helpers';
+import { DECK_STORAGE_KEY, setLocalNotification } from './utils/helpers';
 
 
 function MobileStatusBar() {
@@ -61,10 +60,7 @@ function HomeStack() {
 
 class App extends React.Component {
   componentDidMount() {
-    return AsyncStorage.setItem(DECK_STORAGE_KEY, '')
-      .catch((e) => {
-        alert('failed to set data')
-      })
+    setLocalNotification()
   }
 
   render() {
@@ -117,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect()(App)
+export default App

@@ -1,30 +1,42 @@
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 import { red } from '../utils/colors'
 import Button from './Button'
+import { deleteDeck } from '../actions/index'
 
 
 
-export default class DeckMain extends React.Component {
+class DeckMain extends React.Component {
 
     add = () => {
-        this.props.navigation.navigate('AddQuestionView')
+        const { deck } = this.props.route.params
+        this.props.navigation.navigate('AddQuestionView', { deck })
     }
 
     answer = () => {
-        this.props.navigation.navigate('AnswerView')
+        const { deck } = this.props.route.params
+        this.props.navigation.navigate('AnswerView', { deck })
+    }
+
+    deleteDeck = () => {
+        const { deck } = this.props.route.params
+        this.props.dispatch(deleteDeck(deck))
+
+        alert('Deck deleted successfully!')
+
+        this.props.navigation.navigate('Home')
     }
 
 
     render() {
+        const { deck } = this.props.route.params
         return (
             <View>
-                <Text style={styles.heading}>HEADING TEXT</Text>
+                <Text style={styles.heading}>{deck}</Text>
                 <Button onPress={this.answer}>Answer questions</Button>
                 <Button onPress={this.add}>Add questions</Button>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.deleteDeck}>
                     <Text style={styles.textButton}>Delete Deck</Text>
                 </TouchableOpacity>
             </View>
@@ -49,3 +61,6 @@ const styles = StyleSheet.create({
 
     }
 })
+
+
+export default connect()(DeckMain)
